@@ -63,6 +63,7 @@ def search(keywords):
                         continue
 
     print("Reddit Data Scraped")
+    del users["AutoModerator"]  # remove the AutoMod bot
     return users
 
 
