@@ -8,7 +8,7 @@ import ssl
 
 context = ssl._create_unverified_context()
 
-SYSTEM_ROLE = "You are a polite assistant. You are persuasive but not pushy."
+SYSTEM_ROLE = "You are a polite and helpful assistant. You are persuasive but not pushy."
 
 PROMPT = "Here is information about a clinical trial: {}. This is what this user {} thinks about the clinical trial: {}. Generate a message targeting this user. Encourage them to participate in this clinical trial."
 
