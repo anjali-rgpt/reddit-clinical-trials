@@ -33,5 +33,5 @@ print(dataframe['sentiment'].value_counts())
 negative = dataframe.loc[dataframe.sentiment == "NEG"].sample(2)
 neutral = dataframe.loc[dataframe.sentiment == "NEU"].sample(2)
 
-for element in pd.concat([negative, neutral], axis = 0, ignore_index = True).iterrows():
+for _, element in pd.concat([negative, neutral], axis = 0, ignore_index = True).iterrows():
     print(element['user'], element["text"])
