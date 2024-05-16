@@ -10,7 +10,7 @@ context = ssl._create_unverified_context()
 
 SYSTEM_ROLE = "You are a polite and helpful assistant. You are persuasive but not pushy."
 
-PROMPT = "Here is information about a clinical trial: {}. This is the sentiment of this user {} about the clinical trial: {}. Generate a message targeting this user. Encourage them to participate in this clinical trial if they are positive about it. If they are neutral, give the user more information and try to market the clinical trial."
+PROMPT = "Here is information about a clinical trial: {}. This is the sentiment of this user {} about the clinical trial: {}. Generate a message for the user encouraging them to participate in the clinical trial. Add relevant supporting information as required. Always use {} for details on interventions, outcomes, and eligibility. Always discuss pros and cons."
 
 
 from openai import OpenAI
@@ -19,29 +19,31 @@ client = OpenAI(api_key=config.OPENAI_API_KEY)
 
 def info_search(keyword):
     info_string = ""
+    urls = []
     for url in search(keyword +" clinicaltrials.gov", num_results = 1):
+        urls.append(url)
         page=urequest.urlopen(url, context = context)
-        print(url)
+        # print(url)
         html_doc=BeautifulSoup(page,'html.parser')
 
         study_info = html_doc.findAll('div', {'class':'ct-body3 tr-indent2'})
         for element in study_info:
             if study_info:
                 info_string += "\n" + element.text
-    return info_string
+    return (info_string, urls[0])
 
 
 
-def generate_message(INFORMATION, USER, SENTIMENT):
+def generate_message(INFORMATION, USER, SENTIMENT, URL):
+    #print(PROMPT.format(INFORMATION, USER, SENTIMENT, URL))
     response = client.chat.completions.create(
   model="gpt-3.5-turbo",
   messages=[
     {"role": "system", "content": SYSTEM_ROLE},
-    {"role": "user", "content": PROMPT.format(INFORMATION, USER, SENTIMENT)}
+    {"role": "user", "content": PROMPT.format(INFORMATION, USER, SENTIMENT, URL)}
   ]
 )
-    print(response.choices[0].message.content)
+    return response.choices[0].message.content
 
 
-# generate_message("Women's HARP is a multi-center, observational study which enrolls women with MI who are referred for cardiac catheterization. During the MI hospitalization, questionnaires will be administered to assess psychosocial stress leading up to the event (MI). Participants will also have the option to enroll in the HARP-Stress Ancillary Study and HARP-Platelet Sub-Study. Two months following MI, participants may be screened for the Stress Ancillary Study. Women with elevated perceived stress at screening will be enrolled. Patients will complete baseline assessments (self-report questionnaires and 7 days of wrist actigraphy) and then will be randomized to group-based stress management or to enhanced usual care (EUC). Both study arms involve 8 weekly phone sessions delivered by trained facilitators. Following intervention, participants in both study arms will repeat self-report questionnaires and 7 days of wrist actigraphy. Anticipate enrollment of approximately 200 women to meet target of 144 qualified women.", "xyz", "Positive")
-info_search("women heart attack")
+# generate_message(info_search("women heart attack")[0], "xyz", "Neutral", info_search("women heart attack")[1])
