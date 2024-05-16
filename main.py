@@ -20,6 +20,7 @@ for element in users.keys():
         info.append(new_el)
 
 dataframe = pd.DataFrame(info, columns = ["user", "text", "sentiment"])
+mapping = {"POS": "positive", "NEU":"neutral", "NEG":"negative"}
 
 print("Counts by sentiment (posts and comments, not unique to different users):")
 print(dataframe['sentiment'].value_counts())
@@ -37,4 +38,4 @@ for _, element in pd.concat([negative, neutral], axis = 0, ignore_index = True).
     # print(element['user'], element["text"])
     print("\nMessage for user:", element["user"], " Sentiment:", element["sentiment"], ":")
     info = openai_message.info_search(search_term)
-    print(openai_message.generate_message(info[0], element["user"], element["sentiment"], info[1]))
+    print(openai_message.generate_message(info[0], element["user"], mapping[element["sentiment"]], info[1]))
