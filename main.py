@@ -3,6 +3,10 @@ import pandas as pd
 import reddit_scraper
 import sentiment_analysis
 import openai_message
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 search_term = input("Enter clinical trial keywords about which to search on Reddit and Web:")
 users = reddit_scraper.search(search_term)
