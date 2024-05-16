@@ -11,7 +11,7 @@ print(str(len(users.keys())), " unique users' posts and comments scraped")
 info = []
 for element in users.keys():
     for value in users[element]:
-        new_el = [element, value, sentiment_analysis.sentiment(value)[1]]
+        new_el = [element, value, sentiment_analysis.sentiment(value)]
         info.append(new_el)
 
 dataframe = pd.DataFrame(info, columns = ["user", "text", "sentiment"])
@@ -25,8 +25,8 @@ print(dataframe['sentiment'].value_counts())
 
 # Let us sample two users and their posts/ comments from each category of negative and neutral
 
-negative = dataframe.loc[dataframe.sentiment == "negative"].sample(2)
-neutral = dataframe.loc[dataframe.sentiment == "neutral"].sample(2)
+negative = dataframe.loc[dataframe.sentiment == "NEG"].sample(2)
+neutral = dataframe.loc[dataframe.sentiment == "NEU"].sample(2)
 
 for element in negative.concat(neutral, axis = 0).iterrows():
     print(element['user'], element["text"])
