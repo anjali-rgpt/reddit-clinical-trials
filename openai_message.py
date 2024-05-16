@@ -10,7 +10,7 @@ context = ssl._create_unverified_context()
 
 SYSTEM_ROLE = "You are a polite and helpful assistant. You are persuasive but not pushy."
 
-PROMPT = "Here is information about a clinical trial: {}. This is the sentiment of this user {} about the clinical trial: {}. Generate a message for the user encouraging them to participate in the clinical trial. Add relevant supporting information as required. Always use {} for details on interventions, outcomes, and eligibility. Always discuss pros and cons. If user is neutral, be more informative and persuasive. If user is negative, give them information but do not push them."
+PROMPT = "Here is information about a clinical trial: {}. This is the sentiment of this user named {} about the clinical trial: {}. Generate a personalized message for the user encouraging them to participate in the clinical trial. Add relevant supporting information as required. Always use {} for details on interventions, outcomes, and eligibility. Always discuss pros and cons. If user is neutral, be more informative and persuasive. If user is negative, give them information but do not push them."
 
 
 from openai import OpenAI
