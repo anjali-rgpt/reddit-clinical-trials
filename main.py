@@ -34,4 +34,7 @@ negative = dataframe.loc[dataframe.sentiment == "NEG"].sample(2)
 neutral = dataframe.loc[dataframe.sentiment == "NEU"].sample(2)
 
 for _, element in pd.concat([negative, neutral], axis = 0, ignore_index = True).iterrows():
-    print(element['user'], element["text"])
+    # print(element['user'], element["text"])
+    print("\nMessage for user:", element["user"], " Sentiment:", element["sentiment"], ":")
+    info = openai_message.info_search(search_term)
+    print(openai_message.generate_message(info[0], element["user"], element["sentiment"], info[1]))

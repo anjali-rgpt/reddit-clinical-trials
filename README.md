@@ -47,6 +47,7 @@ The main file executes these steps in order with messages as necessary. At the e
 2. How to get relevant keywords (or subreddits about related health conditions) without explicitly encoding them in?
 3. Cost issues with OpenAI
 4. Informativeness - can use RAG or some additional knowledge base to supplement prompts with better information / use LLM agents capable of web access so that prompt size is kept to a minimum
+5. Problem where scraping brings in stuff from murder trials instead of simply clinical trials.
 
 
 
