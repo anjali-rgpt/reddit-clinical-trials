@@ -51,7 +51,7 @@ def search(keywords):
             # Go through comments for each post to find other interested users
             submission.comment_sort = "top"
             submission.comments.replace_more(limit=7)
-            for comment in submission.comments.list():
+            for comment in submission.comments.list()[:20]:
                 try:
                     if hasattr(comment, "author"):
                         users[comment.author.name].append(comment.body)
